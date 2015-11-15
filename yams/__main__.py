@@ -8,7 +8,7 @@ app = flask.Flask('yams')
 
 def get_reciever():
     try:
-        rxv.find()[0]
+        return rxv.find()[0]
     except:
         print("No reciever founpd!")
         sys.exit(1)
