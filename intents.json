@@ -1,0 +1,33 @@
+{
+  "intents": [
+    {
+      "intent": "SetInput",
+      "slots": [
+        {
+          "name": "Input",
+          "type": "RecieverInputs"
+        }
+      ]
+    },
+    {
+      "intent": "SetPowerState",
+      "slots": [
+        {
+          "name": "State",
+          "type": "RecieverPowerStates"
+        }
+      ],
+      "intent": "SetVolume",
+      "slots": [
+        {
+          "name": "Direction",
+          "type": "Directions"
+        },
+        {
+          "name": "VolumeTweak",
+          "type": "VolumeOptions"
+        }
+      ]
+    }
+  ]
+}

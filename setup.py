@@ -1,0 +1,15 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="yams",
+    version="0.1.0",
+    author="Anthony Grimes",
+    author_email="yams@raynes.me",
+    include_package_data=True,
+    url="https://github.com/Raynes/yams",
+    install_requires=[
+        'flask==0.10.1',
+        'rxv==0.1.7'
+    ],
+    packages=find_packages()
+)

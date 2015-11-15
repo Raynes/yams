@@ -1,0 +1,11 @@
+SetState power {SetState}
+SetState turn it {SetState}
+SetState turn {SetState}
+SetVolume turn it {Direction} {VolumeTweak}
+SetVolume turn {Direction}
+SetVolume turn it {Direction}
+SetInput switch to {Input}
+SetInput switch input to {Input}
+SetInput switch inputs to {Input}
+SetInput set input to {Input}
+SetInput set {Input}
