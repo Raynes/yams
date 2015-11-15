@@ -50,14 +50,14 @@ def set_volume(req):
         vol = 5.0
 
     if direction == 'up':
-        new_volume = current_volume - vol
+        new_volume = current_volume + vol
         if new_volume >= -100:
             reciever.volume = new_volume
             return _format_response("Turning it up {}".format(tweak))
         else:
             return _format_response("Can't turn it up this high")
     else:
-        new_volume = current_volume + vol
+        new_volume = current_volume - vol
         if new_volume <= -1:
             reciever.volume = new_volume
             return _format_response("Turning it down {}".format(tweak))
