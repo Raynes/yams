@@ -5,7 +5,7 @@
       "slots": [
         {
           "name": "Input",
-          "type": "RecieverInputs"
+          "type": "ReceiverInputs"
         }
       ]
     },
@@ -14,7 +14,7 @@
       "slots": [
         {
           "name": "State",
-          "type": "RecieverPowerStates"
+          "type": "ReceiverPowerStates"
         }
       ]
     },

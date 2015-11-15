@@ -6,14 +6,14 @@ import rxv
 app = flask.Flask('yams')
 
 
-def get_reciever():
+def get_receiver():
     try:
         return rxv.find()[0]
     except:
-        print("No reciever founpd!")
+        print("No receiver founpd!")
         sys.exit(1)
 
-reciever = get_reciever()
+receiver = get_receiver()
 
 
 def server(port, debug):
@@ -41,7 +41,7 @@ def set_volume(req):
     slots = req['intent']['slots']
     direction = slots['Direction']['value']
     tweak = slots['VolumeTweak'].get("value", "")
-    current_volume = reciever.volume
+    current_volume = receiver.volume
     if tweak == "a lot" or tweak == "a bunch":
         vol = 10.0
     elif tweak == "a little" or tweak == "a bit" or tweak == "a tad":
@@ -52,14 +52,14 @@ def set_volume(req):
     if direction == 'up':
         new_volume = current_volume + vol
         if new_volume >= -100:
-            reciever.volume = new_volume
+            receiver.volume = new_volume
             return _format_response("Turning it up {}".format(tweak))
         else:
             return _format_response("Can't turn it up this high")
     else:
         new_volume = current_volume - vol
         if new_volume <= -1:
-            reciever.volume = new_volume
+            receiver.volume = new_volume
             return _format_response("Turning it down {}".format(tweak))
         else:
             return _format_response("Can't turn it down this low")
@@ -93,7 +93,7 @@ def dispatch_request():
     return 'NO.', 400
 
 if __name__ == '__main__':
-    description = "Yamaha reciever controller for Amazon Echo devices"
+    description = "Yamaha receiver controller for Amazon Echo devices"
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-p', '--port',
                         type=int,

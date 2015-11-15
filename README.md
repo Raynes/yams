@@ -32,7 +32,7 @@ own skill:
   * a bit
   * a lot
   * a bunch
-* `RecieverPowerStates`
+* `ReceiverPowerStates`
   * on
   * off
 * `RecieverInputs`
