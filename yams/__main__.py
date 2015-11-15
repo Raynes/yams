@@ -97,6 +97,6 @@ if __name__ == '__main__':
                         type=int,
                         default=8185,
                         help="Port to run the server on.")
-    parser.add_argument('-d', '--debug', default=False)
+    parser.add_argument('-d', '--debug', action='store_true')
     args = parser.parse_args()
     server(args.port, args.debug)
