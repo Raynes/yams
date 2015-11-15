@@ -40,7 +40,7 @@ def _format_response(message):
 def set_volume(req):
     slots = req['intent']['slots']
     direction = slots['Direction']['value']
-    tweak = slots['VolumeTweak']['value']
+    tweak = slots['VolumeTweak'].get("value", "")
     current_volume = reciever.volume
     if tweak == "a lot" or tweak == "a bunch":
         vol = 10.0
@@ -53,12 +53,14 @@ def set_volume(req):
         new_volume = current_volume - vol
         if new_volume <= -100:
             reciever.volume = new_volume
+            return _format_response("Turning it up {}".format(tweak))
         else:
             return _format_response("Can't turn it up this high")
     else:
         new_volume = current_volume + vol
         if new_volume >= -1:
             reciever.volume = new_volume
+            return _format_response("Turning it down {}".format(tweak))
         else:
             return _format_response("Can't turn it down this low")
 
