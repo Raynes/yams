@@ -1,6 +1,6 @@
-SetState power {SetState}
-SetState turn it {SetState}
-SetState turn {SetState}
+SetPowerState power {State}
+SetPowerState turn it {State}
+SetPowerState turn {State}
 SetVolume turn it {Direction} {VolumeTweak}
 SetVolume turn {Direction}
 SetVolume turn it {Direction}

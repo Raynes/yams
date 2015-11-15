@@ -16,7 +16,9 @@
           "name": "State",
           "type": "RecieverPowerStates"
         }
-      ],
+      ]
+    },
+    {
       "intent": "SetVolume",
       "slots": [
         {
