@@ -1,46 +1,29 @@
 import sys
 import argparse
-import flask
 import rxv
+import alexandra
 
-app = flask.Flask('yams')
+app = alexandra.Application()
 
 
 def get_receiver():
     try:
         return rxv.find()[0]
     except:
-        print("No receiver founpd!")
+        print("No receiver found!")
         sys.exit(1)
 
 receiver = get_receiver()
 
 
 def server(port, debug):
-    app.run('0.0.0.0', port, debug=debug)
+    app.run_debug('0.0.0.0', port)
 
 
-def _format_response(message):
-    body = {
-        'version': '1.0',
-        'sessionAttributes': {},
-        'response': {
-            'outputSpeech': {
-                'type': 'PlainText',
-                'text': message
-            },
-
-            'shouldEndSession': True
-        }
-    }
-
-    return flask.jsonify(**body)
-
-
-def set_volume(req):
-    slots = req['intent']['slots']
-    direction = slots['Direction']['value']
-    tweak = slots['VolumeTweak'].get("value", "")
+@app.intent('SetVolume')
+def set_volume(slots, session):
+    direction = slots['Direction']
+    tweak = slots.get('VolumeTweak', "")
     current_volume = receiver.volume
     if tweak == "a lot" or tweak == "a bunch":
         vol = 10.0
@@ -53,16 +36,16 @@ def set_volume(req):
         new_volume = current_volume + vol
         if new_volume >= -100:
             receiver.volume = new_volume
-            return _format_response("Turning it up {}".format(tweak))
+            return alexandra.respond("Turning it up {}".format(tweak))
         else:
-            return _format_response("Can't turn it up this high")
+            return alexandra.respond("Can't turn it up this high")
     else:
         new_volume = current_volume - vol
         if new_volume <= -1:
             receiver.volume = new_volume
-            return _format_response("Turning it down {}".format(tweak))
+            return alexandra.respond("Turning it down {}".format(tweak))
         else:
-            return _format_response("Can't turn it down this low")
+            return alexandra.respond("Can't turn it down this low")
 
 
 def set_state(req):
@@ -72,25 +55,6 @@ def set_state(req):
 def set_input(req):
     pass
 
-
-@app.route('/yams', methods=['POST'])
-def dispatch_request():
-    body = flask.request.get_json()
-    req = body['request']
-
-    if req['type'] != 'IntentRequest':
-        return 'nope', 400
-
-    intent_handler = {
-        'SetVolume': set_volume,
-        'SetPowerState': set_state,
-        'SetInput': set_input
-    }.get(req['intent']['name'])
-
-    if intent_handler:
-        return intent_handler(req)
-
-    return 'NO.', 400
 
 if __name__ == '__main__':
     description = "Yamaha receiver controller for Amazon Echo devices"

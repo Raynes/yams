@@ -8,7 +8,6 @@ setup(
     include_package_data=True,
     url="https://github.com/Raynes/yams",
     install_requires=[
-        'flask==0.10.1',
         'rxv==0.1.7'
     ],
     packages=find_packages()
