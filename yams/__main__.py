@@ -21,7 +21,8 @@ def server(port, debug):
     if debug:
         app.run_debug('0.0.0.0', port)
     else:
-        run_simple('0.0.0.0', port, app)
+        wsgi_app = app.create_wsgi_app(True)
+        run_simple('0.0.0.0', port, wsgi_app)
 
 
 @app.intent('SetVolume')
