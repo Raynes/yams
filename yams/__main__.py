@@ -2,6 +2,7 @@ import sys
 import argparse
 import rxv
 import alexandra
+from werkzeug.serving import run_simple
 
 app = alexandra.Application()
 
@@ -17,7 +18,10 @@ receiver = get_receiver()
 
 
 def server(port, debug):
-    app.run_debug('0.0.0.0', port)
+    if debug:
+        app.run_debug('0.0.0.0', port)
+    else:
+        run_simple('0.0.0.0', port, app)
 
 
 @app.intent('SetVolume')
