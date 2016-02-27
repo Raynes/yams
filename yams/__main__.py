@@ -1,8 +1,12 @@
 import sys
+import json
 import argparse
+from pathlib import Path
+
 import rxv
 import alexandra
 
+input_map = json.load(Path('input_mappings.json').open())
 app = alexandra.Application()
 
 
@@ -71,8 +75,16 @@ def whats_the_yams():
                              " the street!")
 
 
-def set_input(req):
-    pass
+@app.intent("SetInput")
+def set_input(slots, session):
+    input = slots['Input']
+
+    if input in input_map:
+        actual_input = input_map[input]
+        receiver.input = actual_input
+        return alexandra.respond("Switched input to {}".format(actual_input))
+    else:
+        return alexandra.respond("Input not recognized")
 
 
 if __name__ == '__main__':
