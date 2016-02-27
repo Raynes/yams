@@ -1,1 +1,1 @@
--e git+https://github.com/erik/alexandra.git#egg=alexandra
+-e git+https://github.com/raynes/alexandra.git@py35-py27#egg=alexandra
