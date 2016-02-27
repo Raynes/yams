@@ -9,3 +9,6 @@ SetInput switch input to {Input}
 SetInput switch inputs to {Input}
 SetInput set input to {Input}
 SetInput set {Input}
+WhatsTheYams what's the yams
+WhatsTheYams what is the yams
+WhatsTheYams what the fuck is the yams

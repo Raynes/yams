@@ -30,6 +30,10 @@
           "type": "VolumeOptions"
         }
       ]
+    },
+    {
+      "intent": "WhatsTheYams",
+      "slots": []
     }
   ]
 }

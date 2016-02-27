@@ -64,6 +64,13 @@ def set_state(slots, session):
         return alexandra.respond("You need to tell me to power on or off")
 
 
+@app.intent("WhatsTheYams")
+def whats_the_yams():
+    return alexandra.respond("The yams is the power that be!"
+                             " You can smell it when I'm walking down"
+                             " the street!")
+
+
 def set_input(req):
     pass
 
