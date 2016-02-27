@@ -2,7 +2,6 @@ import sys
 import argparse
 import rxv
 import alexandra
-from werkzeug.serving import run_simple
 
 app = alexandra.Application()
 
@@ -21,14 +20,16 @@ def server(port, debug):
     if debug:
         app.run_debug('0.0.0.0', port)
     else:
-        wsgi_app = app.create_wsgi_app(True)
-        run_simple('0.0.0.0', port, wsgi_app)
+        app.run('0.0.0.0', port, debug=False)
 
 
 @app.intent('SetVolume')
 def set_volume(slots, session):
     direction = slots['Direction']
+    valid_tweaks = ['a lot', 'a bunch', 'a little', 'a bit', 'a tad']
     tweak = slots.get('VolumeTweak', "")
+    if tweak not in valid_tweaks:
+        tweak = ''
     current_volume = receiver.volume
     if tweak == "a lot" or tweak == "a bunch":
         vol = 10.0
@@ -53,8 +54,14 @@ def set_volume(slots, session):
             return alexandra.respond("Can't turn it down this low")
 
 
-def set_state(req):
-    pass
+@app.intent("SetPowerState")
+def set_state(slots, session):
+    state = slots['State']
+    if state in ['on', 'off']:
+        receiver.on = state == "on"
+        return alexandra.respond("Powering {}".format(state))
+    else:
+        return alexandra.respond("You need to tell me to power on or off")
 
 
 def set_input(req):

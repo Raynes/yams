@@ -8,7 +8,7 @@ setup(
     include_package_data=True,
     url="https://github.com/Raynes/yams",
     install_requires=[
-        'rxv==0.1.7'
+        'rxv==0.1.9'
     ],
     packages=find_packages()
 )
