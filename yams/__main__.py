@@ -7,6 +7,7 @@ import rxv
 import alexandra
 
 input_map = json.load(Path('input_mappings.json').open())
+input_map = {k.lower(): v for k, v in input_map.items()}
 app = alexandra.Application()
 
 
@@ -77,7 +78,7 @@ def whats_the_yams():
 
 @app.intent("SetInput")
 def set_input(slots, session):
-    input = slots['Input']
+    input = slots['Input'].lower()
 
     if input in input_map:
         actual_input = input_map[input]

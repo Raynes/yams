@@ -1,7 +1,7 @@
 {
-  "Chromecast": "HDMI1",
-  "Cast": "HDMI1",
-  "Playstation": "HDMI2",
-  "Play Station": "HDMI2",
-  "Spotify": "Spotify"
+  "chromecast": "HDMI1",
+  "cast": "HDMI1",
+  "playstation": "HDMI2",
+  "play station": "HDMI2",
+  "spotify": "Spotify"
 }
