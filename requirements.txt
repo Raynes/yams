@@ -1,1 +1,16 @@
--e git+https://github.com/raynes/alexandra.git@py35-py27#egg=alexandra
+alexandra==0.3.0
+cffi==1.5.2
+cryptography==1.2.3
+flake8==2.5.4
+idna==2.0
+jedi==0.9.0
+mccabe==0.4.0
+pep8==1.7.0
+pyasn1==0.1.9
+pycparser==2.14
+pyflakes==1.0.0
+pyOpenSSL==0.15.1
+requests==2.9.1
+rxv==0.1.9
+six==1.10.0
+Werkzeug==0.11.4
