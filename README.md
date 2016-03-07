@@ -1,24 +1,29 @@
 # yams
 
-A Python web service for controlling Yamaha receivers from an Amazon echo device.
+A Python web service for controlling Yamaha receivers from an Amazon echo
+device.
 
 ## Usage
 
-This is a Python 3 Flask app. Set it up like so:
+Yams is super easy to run. Just get Python 3.5.1 (I highly recommend
+[pyenv](https://github.com/yyuu/pyenv)) and do the following inside this
+directory.
 
-```
-$ pyvenv .env
-$ . .env/bin/activate
-$ pip install --editable .
-$ python -m yams
+```shell
+$ pyvenv env
+$ . env/bin/activate
+$ pip install .
+$ python -m yams # Optionally with --debug or --port.
 ```
 
 This will run a web server on port 8185 by default, but this can be
 changed via a `-p` flag. You can turn on debug mode by passing `-d`.
 
-Getting a self signed SSL certificate and nginx set up to proxy this thing
-is an exercise left to the reader and Amazon's excellentish documentation on
-the subject.
+Getting a self signed SSL certificate and nginx set up to proxy this guy is
+not an entirely trivial process, but
+[alexandra](https://github.com/erik/alexandra#setting-up-a-web-server) has
+some documentation on it and a script to help with generating the files you
+need. The `alexandra` project is the framework used to develop this app.
 
 Intents and utterances are included in `intents.json` and `utterances.txt`,
 respectively. All slots are custom types, which I have set as follows on my
@@ -36,9 +41,8 @@ own skill:
   * on
   * off
 * `RecieverInputs`
-  * Chromecast
-  * Playstation
+  * chromecast
+  * playstation
+  * play station
 
-Currently, only volume control is implemented. ReceiverInputs will map
-via configuration to actual receiver inputs. On and off is easy, but Erik
-needs _something_ to do. <3
+Note all `RecieverInputs` should be lowercase.
