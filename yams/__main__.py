@@ -22,10 +22,7 @@ receiver = get_receiver()
 
 
 def server(port, debug):
-    if debug:
-        app.run_debug('0.0.0.0', port)
-    else:
-        app.run('0.0.0.0', port, debug=False)
+    app.run('0.0.0.0', port, debug=debug)
 
 
 @app.intent('SetVolume')
