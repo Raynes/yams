@@ -6,12 +6,18 @@ from pathlib import Path
 import rxv
 import alexandra
 
+# Load input mappings and make sure the keys are lowercase.
 input_map = json.load(Path('input_mappings.json').open())
 input_map = {k.lower(): v for k, v in input_map.items()}
+
 app = alexandra.Application()
 
 
 def get_receiver():
+    """Look for a receiver on the local network and grab the first one
+    we find, or exit with a useful message.
+
+    """
     try:
         return rxv.find()[0]
     except:
@@ -22,11 +28,32 @@ receiver = get_receiver()
 
 
 def server(port, debug):
+    """Run a webserver on 0.0.0.0 with the specified port and debug
+    options
+
+    """
     app.run('0.0.0.0', port, debug=debug)
 
 
 @app.intent('SetVolume')
 def set_volume(slots, session):
+    """Implements the SetVolume intent. Depending on the slot values,
+    turns the receiver volume up and down at varying granularities described
+    below:
+
+
+    'turn it [down|up]': tick the volume 5.0 decibels up or down.
+
+    'turn it [down|up] [a little|a bit|a tad]': tick the volume 2.0 decibels
+    up or down.
+
+    'turn it [down|up] [a lot|a bunch]': tick the volume 10.0 decibels up or
+    down.
+
+    You'll receive a response indicating that it understood exactly whats
+    you meant.
+
+    """
     direction = slots['Direction']
     valid_tweaks = ['a lot', 'a bunch', 'a little', 'a bit', 'a tad']
     tweak = slots.get('VolumeTweak', "")
@@ -58,6 +85,10 @@ def set_volume(slots, session):
 
 @app.intent("SetPowerState")
 def set_state(slots, session):
+    """Implements the SetPowerState intent, allowing you to ask the skill
+    to 'turn [on|off]' using phrasing dictated in your utterances.
+
+    """
     state = slots['State']
     if state in ['on', 'off']:
         receiver.on = state == "on"
@@ -68,6 +99,7 @@ def set_state(slots, session):
 
 @app.intent("WhatsTheYams")
 def whats_the_yams():
+    """An effective way to determine what the yams is."""
     return alexandra.respond("The yams is the power that be!"
                              " You can smell it when I'm walking down"
                              " the street!")
@@ -75,6 +107,15 @@ def whats_the_yams():
 
 @app.intent("SetInput")
 def set_input(slots, session):
+    """Implements the SetInput intent.
+
+    This one expects that you've already mapped your `RecieverInputs` slot
+    values in the input_mappings.json file and Amazon Echo Skill config. It
+    is a simple mapping of recognizable words to actual Yamaha input names.
+
+    Example usage given my input mappings would be 'switch to chromecast'.
+
+    """
     input = slots['Input'].lower()
 
     if input in input_map:
