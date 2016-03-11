@@ -45,4 +45,12 @@ own skill:
   * playstation
   * play station
 
-Note all `RecieverInputs` should be lowercase.
+`ReceiverInputs` is the only one you'd configure differently when setting up
+your own skill. You set the mappings from these slot values in the
+`input_mappings.json` file.
+
+Note this project is aimed towards developers. It's a complicated process to
+set up an Amazon Echo skill, and this project has to run somewhere on the
+same network as the receiver it is meant to control, otherwise you'd have
+to open up access to the receiver to the internet. For example, I run Yams
+on a Raspberry Pi 2.
