@@ -56,3 +56,18 @@ own skill:
 `ReceiverInputs` is the only one you'd configure differently when setting up
 your own skill. You set the mappings from these slot values in the
 `input_mappings.json` file.
+
+### Activation Word
+
+I recommend 'receiver' as the activation word for this skill. 'yams' will
+work, but I had spotty luck with the Echo often thinking I was asking it to
+turn itself up or down.
+
+### Functionality
+
+Yams can turn your receiver on and off (if network standby is enabled), turn
+the volume up and down at various levels of granularity, and switch inputs
+for you. Most common remote functionality is covered.
+
+When you get bored of listening to yourself ask it "what's the yams?". If you
+don't get it, you don't listen to enough Kendrick Lamar.
