@@ -13,6 +13,8 @@ directory.
 $ pyvenv env
 $ . env/bin/activate
 $ pip install .
+# Note that it's best to assign a static DHCP ip to the receiver so the ip is
+# always the same, then pass that it in with the -r option.
 $ python -m yams # Optionally with --debug or --port.
 ```
 
