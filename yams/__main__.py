@@ -11,27 +11,30 @@ input_map = json.load(Path('input_mappings.json').open())
 input_map = {k.lower(): v for k, v in input_map.items()}
 
 app = alexandra.Application()
+rxv_ip = None
 
 
-def get_receiver():
+def get_receiver(ip=None):
     """Look for a receiver on the local network and grab the first one
     we find, or exit with a useful message.
 
     """
+    if rxv_ip:
+        return rxv.RXV('http://{}:80/YamahaRemoteControl/ctrl'.format(rxv_ip))
     try:
         return rxv.find()[0]
     except:
         print("No receiver found!")
         sys.exit(1)
 
-receiver = get_receiver()
 
-
-def server(port, debug):
+def server(port, ip, debug):
     """Run a webserver on 0.0.0.0 with the specified port and debug
     options
 
     """
+    global rxv_ip
+    rxv_ip = ip
     app.run('0.0.0.0', port, debug=debug)
 
 
@@ -54,6 +57,7 @@ def set_volume(slots, session):
     you meant.
 
     """
+    receiver = get_receiver(rxv_ip)
     direction = slots['Direction']
     valid_tweaks = ['a lot', 'a bunch', 'a little', 'a bit', 'a tad']
     tweak = slots.get('VolumeTweak', "")
@@ -89,6 +93,7 @@ def set_state(slots, session):
     to 'turn [on|off]' using phrasing dictated in your utterances.
 
     """
+    receiver = get_receiver(rxv_ip)
     state = slots['State']
     if state in ['on', 'off']:
         receiver.on = state == "on"
@@ -119,6 +124,7 @@ def set_input(slots, session):
     input = slots['Input'].lower()
 
     if input in input_map:
+        receiver = get_receiver(rxv_ip)
         actual_input = input_map[input]
         receiver.input = actual_input
         return alexandra.respond("Switched input to {}".format(actual_input))
@@ -133,6 +139,9 @@ if __name__ == '__main__':
                         type=int,
                         default=8185,
                         help="Port to run the server on.")
+    parser.add_argument('-r', '--receiver',
+                        help="Explicitly pass reciever ip.",
+                        default=None)
     parser.add_argument('-d', '--debug', action='store_true')
     args = parser.parse_args()
-    server(args.port, args.debug)
+    server(args.port, args.receiver, args.debug)
