@@ -2,6 +2,7 @@ import sys
 import json
 import argparse
 from pathlib import Path
+import asyncio
 
 import rxv
 import alexandra
@@ -14,18 +15,32 @@ app = alexandra.Application()
 rxv_ip = None
 
 
-def get_receiver(ip=None):
-    """Look for a receiver on the local network and grab the first one
-    we find, or exit with a useful message.
-
-    """
+async def _get_receiver(ip=None):
+    rec = None
     if rxv_ip:
-        return rxv.RXV('http://{}:80/YamahaRemoteControl/ctrl'.format(rxv_ip))
+        rec = rxv.RXV('http://{}:80/YamahaRemoteControl/ctrl'.format(rxv_ip))
     try:
-        return rxv.find()[0]
+        rec = rxv.find()[0]
     except:
         print("No receiver found!")
         sys.exit(1)
+    rec.volume
+    return rec
+
+
+async def try_receiver(ip=None):
+    yield from asyncio.wait_for(_get_receiver(ip), 3.0)
+
+
+def get_receiver(ip=None):
+    """If ip is passed in, test that it's accepting requests or raise an
+    exception. If ip is not passed in, fallback to ssdp search.
+
+    """
+    loop = asyncio.get_event_loop()
+    receiver = loop.run_until_complete(try_receiver(ip))
+    loop.close()
+    return receiver
 
 
 def server(port, ip, debug):
