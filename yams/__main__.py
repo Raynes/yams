@@ -17,8 +17,8 @@ rxv_ip = None
 
 async def _get_receiver(ip=None):
     rec = None
-    if rxv_ip:
-        rec = rxv.RXV('http://{}:80/YamahaRemoteControl/ctrl'.format(rxv_ip))
+    if ip:
+        rec = rxv.RXV('http://{}:80/YamahaRemoteControl/ctrl'.format(ip))
     try:
         rec = rxv.find()[0]
     except:
@@ -38,7 +38,7 @@ def get_receiver(ip=None):
 
     """
     loop = asyncio.get_event_loop()
-    receiver = loop.run_until_complete(try_receiver(ip))
+    receiver = loop.run_until_complete(try_receiver(rxv_ip))
     loop.close()
     return receiver
 
