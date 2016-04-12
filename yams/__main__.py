@@ -39,7 +39,6 @@ def get_receiver(ip=None):
     """
     loop = asyncio.get_event_loop()
     receiver = loop.run_until_complete(try_receiver(rxv_ip))
-    loop.close()
     return receiver
 
 
