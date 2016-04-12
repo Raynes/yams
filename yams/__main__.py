@@ -29,7 +29,7 @@ async def _get_receiver(ip=None):
 
 
 async def try_receiver(ip=None):
-    yield from asyncio.wait_for(_get_receiver(ip), 3.0)
+    await asyncio.wait_for(_get_receiver(ip), 3.0)
 
 
 def get_receiver(ip=None):
