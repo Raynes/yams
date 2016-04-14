@@ -19,12 +19,15 @@ async def _get_receiver(ip=None):
     rec = None
     if ip:
         rec = rxv.RXV('http://{}:80/YamahaRemoteControl/ctrl'.format(ip))
-    try:
-        rec = rxv.find()[0]
-    except:
-        print("No receiver found!")
-        sys.exit(1)
-    rec.volume
+    else:
+        try:
+            rec = rxv.find()[0]
+        except:
+            print("No receiver found!")
+            sys.exit(1)
+
+    # Are you there?
+    isinstance(rec.volume, float)
     return rec
 
 
